@@ -1,93 +1,283 @@
 
-=====================================================================
-              REFLECTOR RADIATION PATTERN - PERFORMANCE
-=====================================================================
- Co-polar = LHCP (E-l), cross-polar = RHCP (E-r). Gains in dBi.
- "tp" = theta-phi file (9 phi cuts), "uv" = uv-grid file.
- Interpolated values: parabolic fit of the 3 samples around the max.
+==============================================================================
+  REFLECTOR RADIATION PATTERNS - PERFORMANCE REPORT
+==============================================================================
+  G      co-polar gain (LHCP, E-l)              G_max  its peak value
+  G_x    cross-polar gain (RHCP, E-r)            G0     (pi D/lambda)^2
+  eta    aperture efficiency = G_max / G0        HPBW   -3 dB beamwidth
+  FML    first minor lobe (first lobe after the first null of the main beam)
+  FMLL   first minor lobe level = G(FML) - G_max  [dB]
+  XPD    cross-polar discrimination = G_max - G_x,max  [dB]
+  AR     axial ratio (0 dB = perfect circular polarization)
+  theta-phi file : 4 full plane cuts (phi = 0/45/90/135 deg)
+  u-v file       : 401 x 401 grid, u,v in [-0.4, 0.4]
 
----------------------------------------------------------------------
- S-band : D = 30 m, F = 30 m, f = 2.2 GHz, lambda = 0.1363 m, D/lambda = 220.2
----------------------------------------------------------------------
- THEORETICAL REFERENCES
-   Max directivity, uniform aperture (pi*D/lambda)^2 :    56.80 dBi
-   HPBW uniform aperture 58.4*lambda/D              :   0.2653 deg
-   HPBW rule of thumb (tapered) 70*lambda/D         :   0.3180 deg
-   CP beam squint asin(lambda sin(aoff)/(4 pi F))  :   0.0166 deg (first-order estimate)
 
- PEAK GAIN (co-polar)                         tp file        uv file
-   raw sample                [dBi]           55.605         55.485
-   interpolated              [dBi]           55.612         55.620
-   aperture efficiency        [%]              76.1           76.3
+==============================================================================
+  S-BAND REFLECTOR   D = 30 m, F = 30 m, f = 2.2 GHz
+==============================================================================
 
- PEAK LOCATION
-   tp raw sample   : theta = 0.0250 deg, phi = -90.0 deg
-   tp interpolated : theta = 0.0325 deg, phi = -90.0 deg
-   uv raw sample   : (u,v) = (0.00000, 0.00000)
-   uv interpolated : (u,v) = (-0.00000, -0.00058) -> theta = 0.0331 deg, phi = -90.2 deg
+[A] THEORETICAL EXPECTED VALUES
+------------------------------------------------------------------------------
+  Uniformly illuminated circular aperture of diameter D (Airy pattern)
+    lambda                                        0.1363 m
+    D / lambda                                     220.2
+    G0 = (pi D / lambda)^2     (eta = 100 %)       56.80 dBi
+    HPBW                                          0.2678 deg
+    first null                                    0.3174 deg
+    first minor lobe (FML) position               0.4254 deg
+    first minor lobe level FMLL                   -17.57 dB
+  Reflector with ~ -11 dB edge taper (Balanis sec. 15.4)
+    eta (optimum edge taper)                          82 %
+    expected G_max = G0 + 10 log10(eta)            55.94 dBi
+    HPBW (rule of thumb 70 lambda / D)            0.3180 deg
+    FMLL                                      below -17.6 dB (lower than uniform)
+  Circular polarization on an offset reflector
+    beam squint asin(lambda sin(aoff)/(4 pi F))   0.0166 deg  (towards phi = +-90 deg)
+    ideal cross-polarization: very low, null on the beam axis
 
- HALF POWER BEAMWIDTH [deg]
-   plane phi [deg] :         0        45        90       135      mean
-   tp file         :    0.3085    0.3096    0.3108    0.3098    0.3097
-   uv file         :    0.3171    0.2967    0.2924    0.2968    0.3007
-   samples per HPBW: tp 12.4 (step 0.0250 deg), uv 2.6 (step 0.1146 deg)
+[B] VALUES FROM THE RAW FILE DATA (file samples only, no interpolation)
+------------------------------------------------------------------------------
+    (-3 dB points: straight line between the 2 samples around -3 dB)
+                                                theta-phi file       u-v file
+  sampling step (on the axes)             [deg]         0.0250         0.1146
+  CO-POLAR (LHCP)
+  G_max                                   [dBi]         55.605         55.485
+  eta = G_max / G0                          [%]           76.0           73.9
+  peak direction  theta                   [deg]         0.0250         0.0000
+                  phi                     [deg]          -90.0            0.0
+                  u = sin(theta) cos(phi)    [-]        0.00000        0.00000
+                  v = sin(theta) sin(phi)    [-]       -0.00044        0.00000
+  HPBW, plane phi =   0 deg               [deg]         0.3079         0.2883
+  HPBW, plane phi =  45 deg               [deg]         0.3090         0.2853
+  HPBW, plane phi =  90 deg               [deg]         0.3104         0.3013
+  HPBW, plane phi = 135 deg               [deg]         0.3091         0.2854
+  HPBW, mean                              [deg]         0.3091         0.2901
+  first null, plane phi =   0 deg         [deg]         0.6250         1.0314
+  first null, plane phi =  45 deg         [deg]         0.6250         0.7293
+  first null, plane phi =  90 deg         [deg]         0.4125         0.5157
+  first null, plane phi = 135 deg         [deg]         0.6250         0.7293
+  FIRST MINOR LOBE (FML)
+  FML position, plane phi =   0 deg       [deg]        -0.7250         1.0314
+  FMLL,         plane phi =   0 deg        [dB]         -29.84         -34.99
+  FML position, plane phi =  45 deg       [deg]        -0.7500        -0.8103
+  FMLL,         plane phi =  45 deg        [dB]         -30.77         -33.42
+  FML position, plane phi =  90 deg       [deg]         0.4500         0.6876
+  FMLL,         plane phi =  90 deg        [dB]         -28.94         -31.24
+  FML position, plane phi = 135 deg       [deg]        -0.7500        -0.8103
+  FMLL,         plane phi = 135 deg        [dB]         -30.82         -33.07
+  highest FMLL                             [dB]         -28.94         -31.24
+     in plane phi                         [deg]             90             90
+     at theta (signed)                    [deg]         0.4500         0.6876
+     G(FML)                               [dBi]          26.66          24.24
+  CROSS-POLAR (RHCP)
+    main-beam region = inside the first null of G (theta <= theta_null)
+  theta_null (mean of the planes)         [deg]         0.5719         0.7514
+  G_x,max  (max of G_x in main beam)      [dBi]          -8.08          -8.49
+     at theta                             [deg]         0.2000         0.2292
+     at phi                               [deg]           90.0           90.0
+  XPD = G_max - G_x,max                    [dB]          63.69          63.98
+  worst XPD in -3 dB beam: min(G-G_x)      [dB]          62.24          62.90
+  AR at the peak of G                      [dB]       2.08e-03       7.05e-07
+  max AR in the -3 dB beam                 [dB]       1.34e-02       1.24e-02
+  points inside the -3 dB beam              [-]             62              7
+    max of G_x over the WHOLE file (far from the beam, for information):
+  G_x max, whole file                     [dBi]          -7.98          -8.49
+     at theta                             [deg]        90.0000         0.2292
+     at phi                               [deg]          135.0           90.0
 
- FIRST NULL / FIRST SIDE LOBE (tp file)
-   plane phi [deg] :         0        45        90       135
-   first null [deg]:    0.6250    0.5250    0.4125    0.5250
-   SLL [dB]        :    -29.84    -25.07    -28.95    -24.99
+[C] VALUES FROM THE INTERPOLATED DATA (cubic spline of the complex field)
+------------------------------------------------------------------------------
+    E = 10^(G/20) exp(j phase) from amplitude and phase of the files,
+    real and imaginary parts interpolated with cubic splines, G = 20 log10|E|
+    theta-phi cuts resampled with a step 20 times finer (|theta| <= 1.50 deg)
+    uv grid resampled 20 times finer around the beam
+                                                theta-phi file       u-v file
+  CO-POLAR (LHCP)
+  G_max                                   [dBi]         55.612         55.605
+  eta = G_max / G0                          [%]           76.1           76.0
+  peak direction  theta                   [deg]         0.0325         0.0344
+                  phi                     [deg]          -90.0          -90.0
+                  u = sin(theta) cos(phi)    [-]        0.00000        0.00000
+                  v = sin(theta) sin(phi)    [-]       -0.00057       -0.00060
+  HPBW, plane phi =   0 deg               [deg]         0.3085         0.3085
+  HPBW, plane phi =  45 deg               [deg]         0.3096         0.3097
+  HPBW, plane phi =  90 deg               [deg]         0.3108         0.3111
+  HPBW, plane phi = 135 deg               [deg]         0.3098         0.3098
+  HPBW, mean                              [deg]         0.3097         0.3098
+  first null, plane phi =   0 deg         [deg]         0.6213         0.6231
+  first null, plane phi =  45 deg         [deg]         0.6169         0.6162
+  first null, plane phi =  90 deg         [deg]         0.4150         0.4163
+  first null, plane phi = 135 deg         [deg]         0.6169         0.6169
+  FIRST MINOR LOBE (FML)
+  FML position, plane phi =   0 deg       [deg]        -0.7200        -0.7162
+  FMLL,         plane phi =   0 deg        [dB]         -29.83         -29.86
+  FML position, plane phi =  45 deg       [deg]        -0.7462        -0.7462
+  FMLL,         plane phi =  45 deg        [dB]         -30.76         -30.83
+  FML position, plane phi =  90 deg       [deg]         0.4600         0.4587
+  FMLL,         plane phi =  90 deg        [dB]         -28.83         -28.83
+  FML position, plane phi = 135 deg       [deg]        -0.7500        -0.7525
+  FMLL,         plane phi = 135 deg        [dB]         -30.82         -30.89
+  highest FMLL                             [dB]         -28.83         -28.83
+     in plane phi                         [deg]             90             90
+     at theta (signed)                    [deg]         0.4600         0.4587
+     G(FML)                               [dBi]          26.78          26.78
+  CROSS-POLAR (RHCP)
+    main-beam region = inside the first null of G (theta <= theta_null)
+  theta_null (mean of the planes)         [deg]         0.5675         0.5681
+  G_x,max  (max of G_x in main beam)      [dBi]          -8.06          -8.09
+     at theta                             [deg]         0.1912         0.1948
+     at phi                               [deg]           90.0           90.0
+  XPD = G_max - G_x,max                    [dB]          63.67          63.70
+  worst XPD in -3 dB beam: min(G-G_x)      [dB]          62.07          62.07
+  AR at the peak of G                      [dB]       2.66e-03       2.77e-03
+  max AR in the -3 dB beam                 [dB]       1.37e-02       1.37e-02
+  points inside the -3 dB beam              [-]            981           2287
 
- CROSS-POLAR (RHCP)
-   main lobe region: theta <= 0.5219 deg (mean first null)
-   tp main-lobe X-pol peak :    -8.08 dBi at theta = 0.2000 deg, phi = 90.0 deg
-   uv main-lobe X-pol peak :    -8.49 dBi at (u,v) = (0.0000, 0.0040) -> theta = 0.2292, phi = 90.0 deg
-   tp global X-pol peak    :    -7.98 dBi at theta = 90.0000 deg, phi = 135.0 deg
-   uv global X-pol peak    :    -8.49 dBi at (u,v) = (0.0000, 0.0040) -> theta = 0.2292, phi = 90.0 deg
-   XPD = co peak - X-pol main-lobe peak : tp 63.69 dB, uv 64.11 dB
-   worst XPD inside the -3 dB beam      : tp 62.24 dB, uv 62.90 dB
-   axial ratio at the beam peak (tp)    : 2.08e-03 dB
+  Sampling of the main beam: 12.4 samples per HPBW in the theta-phi file,
+  2.7 in the u-v file.
 
----------------------------------------------------------------------
- Ka-band : D = 10 m, F = 10 m, f = 30 GHz, lambda = 0.0100 m, D/lambda = 1000.7
----------------------------------------------------------------------
- THEORETICAL REFERENCES
-   Max directivity, uniform aperture (pi*D/lambda)^2 :    69.95 dBi
-   HPBW uniform aperture 58.4*lambda/D              :   0.0584 deg
-   HPBW rule of thumb (tapered) 70*lambda/D         :   0.0700 deg
-   CP beam squint asin(lambda sin(aoff)/(4 pi F))  :   0.0026 deg (first-order estimate)
 
- PEAK GAIN (co-polar)                         tp file        uv file
-   raw sample                [dBi]           68.984         68.984
-   interpolated              [dBi]           69.002         68.990
-   aperture efficiency        [%]              80.4           80.2
+==============================================================================
+  KA-BAND REFLECTOR   D = 10 m, F = 10 m, f = 30 GHz
+==============================================================================
 
- PEAK LOCATION
-   tp raw sample   : theta = 0.0000 deg, phi = -180.0 deg
-   tp interpolated : theta = 0.0026 deg, phi = -90.0 deg
-   uv raw sample   : (u,v) = (0.00000, 0.00000)
-   uv interpolated : (u,v) = (0.00000, -0.00003) -> theta = 0.0016 deg, phi = -89.4 deg
+[A] THEORETICAL EXPECTED VALUES
+------------------------------------------------------------------------------
+  Uniformly illuminated circular aperture of diameter D (Airy pattern)
+    lambda                                        0.0100 m
+    D / lambda                                    1000.7
+    G0 = (pi D / lambda)^2     (eta = 100 %)       69.95 dBi
+    HPBW                                          0.0589 deg
+    first null                                    0.0698 deg
+    first minor lobe (FML) position               0.0936 deg
+    first minor lobe level FMLL                   -17.57 dB
+  Reflector with ~ -11 dB edge taper (Balanis sec. 15.4)
+    eta (optimum edge taper)                          82 %
+    expected G_max = G0 + 10 log10(eta)            69.09 dBi
+    HPBW (rule of thumb 70 lambda / D)            0.0700 deg
+    FMLL                                      below -17.6 dB (lower than uniform)
+  Circular polarization on an offset reflector
+    beam squint asin(lambda sin(aoff)/(4 pi F))   0.0026 deg  (towards phi = +-90 deg)
+    ideal cross-polarization: very low, null on the beam axis
 
- HALF POWER BEAMWIDTH [deg]
-   plane phi [deg] :         0        45        90       135      mean
-   tp file         :    0.0705    0.0705    0.0705    0.0705    0.0705
-   uv file         :    0.0571    0.0554    0.0561    0.0554    0.0560
-   samples per HPBW: tp 2.8 (step 0.0250 deg), uv 0.5 (step 0.1146 deg)
-   WARNING: the uv grid has less than 2 samples per HPBW: the uv
-            peak gain, HPBW and X-pol/XPD values are NOT reliable
-            (the main beam falls between the grid points): use the tp file.
+[B] VALUES FROM THE RAW FILE DATA (file samples only, no interpolation)
+------------------------------------------------------------------------------
+    (-3 dB points: straight line between the 2 samples around -3 dB)
+                                                theta-phi file       u-v file
+  sampling step (on the axes)             [deg]         0.0250         0.1146
+  CO-POLAR (LHCP)
+  G_max                                   [dBi]         68.984         68.984
+  eta = G_max / G0                          [%]           80.1           80.1
+  peak direction  theta                   [deg]         0.0000         0.0000
+                  phi                     [deg]         -180.0            0.0
+                  u = sin(theta) cos(phi)    [-]       -0.00000        0.00000
+                  v = sin(theta) sin(phi)    [-]        0.00000        0.00000
+  HPBW, plane phi =   0 deg               [deg]         0.0623         0.0257
+  HPBW, plane phi =  45 deg               [deg]         0.0625         0.0317
+  HPBW, plane phi =  90 deg               [deg]         0.0627         0.0250
+  HPBW, plane phi = 135 deg               [deg]         0.0625         0.0317
+  HPBW, mean                              [deg]         0.0625         0.0285
+  first null, plane phi =   0 deg         [deg]         0.2000         3.0959
+  first null, plane phi =  45 deg         [deg]         0.1625         0.6482
+  first null, plane phi =  90 deg         [deg]         0.1625         5.8551
+  first null, plane phi = 135 deg         [deg]         0.1625         0.7293
+  FIRST MINOR LOBE (FML)
+  FML position, plane phi =   0 deg       [deg]         0.2250        -2.9807
+  FMLL,         plane phi =   0 deg        [dB]         -35.40         -71.75
+  FML position, plane phi =  45 deg       [deg]         0.1500         1.1345
+  FMLL,         plane phi =  45 deg        [dB]         -31.41         -55.94
+  FML position, plane phi =  90 deg       [deg]         0.1500         5.1636
+  FMLL,         plane phi =  90 deg        [dB]         -31.31         -81.80
+  FML position, plane phi = 135 deg       [deg]         0.1500        -0.9724
+  FMLL,         plane phi = 135 deg        [dB]         -31.37         -55.10
+  highest FMLL                             [dB]         -31.31         -55.10
+     in plane phi                         [deg]             90            135
+     at theta (signed)                    [deg]         0.1500        -0.9724
+     G(FML)                               [dBi]          37.68          13.89
+  CROSS-POLAR (RHCP)
+    main-beam region = inside the first null of G (theta <= theta_null)
+  theta_null (mean of the planes)         [deg]         0.1719         2.5821
+  G_x,max  (max of G_x in main beam)      [dBi]         -12.32         -24.73
+     at theta                             [deg]         0.0500         0.1146
+     at phi                               [deg]           90.0           90.0
+  XPD = G_max - G_x,max                    [dB]          81.31          93.72
+  worst XPD in -3 dB beam: min(G-G_x)      [dB]          81.35         149.29
+  AR at the peak of G                      [dB]       1.07e-06       5.96e-07
+  max AR in the -3 dB beam                 [dB]       1.49e-03       5.96e-07
+  points inside the -3 dB beam              [-]             18              1
+    max of G_x over the WHOLE file (far from the beam, for information):
+  G_x max, whole file                     [dBi]          14.14         -24.73
+     at theta                             [deg]        62.9250         0.1146
+     at phi                               [deg]         -180.0           90.0
 
- FIRST NULL / FIRST SIDE LOBE (tp file)
-   plane phi [deg] :         0        45        90       135
-   first null [deg]:    0.1250    0.1625    0.1625    0.1625
-   SLL [dB]        :    -31.73    -31.42    -31.33    -31.38
+[C] VALUES FROM THE INTERPOLATED DATA (cubic spline of the complex field)
+------------------------------------------------------------------------------
+    E = 10^(G/20) exp(j phase) from amplitude and phase of the files,
+    real and imaginary parts interpolated with cubic splines, G = 20 log10|E|
+    theta-phi cuts resampled with a step 20 times finer (|theta| <= 0.50 deg)
+    uv grid resampled 20 times finer around the beam
+                                                theta-phi file       u-v file
+  CO-POLAR (LHCP)
+  G_max                                   [dBi]         69.000         68.984
+  eta = G_max / G0                          [%]           80.4           80.1
+  peak direction  theta                   [deg]         0.0025         0.0000
+                  phi                     [deg]          -90.0           45.0
+                  u = sin(theta) cos(phi)    [-]        0.00000        0.00000
+                  v = sin(theta) sin(phi)    [-]       -0.00004        0.00000
+  HPBW, plane phi =   0 deg               [deg]         0.0669         0.0922
+  HPBW, plane phi =  45 deg               [deg]         0.0669         0.0924
+  HPBW, plane phi =  90 deg               [deg]         0.0670         0.0924
+  HPBW, plane phi = 135 deg               [deg]         0.0669         0.0924
+  HPBW, mean                              [deg]         0.0669         0.0924
+  first null, plane phi =   0 deg         [deg]         0.0875         0.1087
+  first null, plane phi =  45 deg         [deg]         0.0869         0.1512
+  first null, plane phi =  90 deg         [deg]         0.0875         0.1094
+  first null, plane phi = 135 deg         [deg]         0.0869         0.1512
+  FIRST MINOR LOBE (FML)
+  FML position, plane phi =   0 deg       [deg]        -0.1050         0.1550
+  FMLL,         plane phi =   0 deg        [dB]         -25.18         -14.96
+  FML position, plane phi =  45 deg       [deg]        -0.1075        -0.2100
+  FMLL,         plane phi =  45 deg        [dB]         -25.61         -25.35
+  FML position, plane phi =  90 deg       [deg]         0.1038        -0.1550
+  FMLL,         plane phi =  90 deg        [dB]         -26.11         -14.96
+  FML position, plane phi = 135 deg       [deg]        -0.1075        -0.2100
+  FMLL,         plane phi = 135 deg        [dB]         -25.62         -25.36
+  highest FMLL                             [dB]         -25.18         -14.96
+     in plane phi                         [deg]              0             90
+     at theta (signed)                    [deg]        -0.1050        -0.1550
+     G(FML)                               [dBi]          43.80          54.02
+  CROSS-POLAR (RHCP)
+    main-beam region = inside the first null of G (theta <= theta_null)
+  theta_null (mean of the planes)         [deg]         0.0872         0.1301
+  G_x,max  (max of G_x in main beam)      [dBi]         -12.10         -24.51
+     at theta                             [deg]         0.0438         0.1261
+     at phi                               [deg]           90.0           90.0
+  XPD = G_max - G_x,max                    [dB]          81.10          93.49
+  worst XPD in -3 dB beam: min(G-G_x)      [dB]          79.44          97.50
+  AR at the peak of G                      [dB]       1.18e-04       5.98e-07
+  max AR in the -3 dB beam                 [dB]       1.85e-03       2.32e-04
+  points inside the -3 dB beam              [-]            214            203
 
- CROSS-POLAR (RHCP)
-   main lobe region: theta <= 0.1531 deg (mean first null)
-   tp main-lobe X-pol peak :   -12.32 dBi at theta = 0.0500 deg, phi = 90.0 deg
-   uv main-lobe X-pol peak :   -24.73 dBi at (u,v) = (0.0000, 0.0020) -> theta = 0.1146, phi = 90.0 deg
-   tp global X-pol peak    :    14.14 dBi at theta = 62.9250 deg, phi = -180.0 deg
-   uv global X-pol peak    :   -24.73 dBi at (u,v) = (0.0000, 0.0020) -> theta = 0.1146, phi = 90.0 deg
-   XPD = co peak - X-pol main-lobe peak : tp 81.32 dB, uv 93.72 dB
-   worst XPD inside the -3 dB beam      : tp 81.35 dB, uv 149.29 dB
-   axial ratio at the beam peak (tp)    : 1.07e-06 dB
+  Sampling of the main beam: 2.7 samples per HPBW in the theta-phi file,
+  0.6 in the u-v file.
+  WARNING: the u-v grid has less than 2 samples per HPBW: the main beam
+  falls between its points, so the u-v values (raw AND interpolated) of
+  G_max, HPBW, FML and cross-pol are NOT reliable. Use the theta-phi file.
+
+
+==============================================================================
+  SUMMARY - best estimates (theta-phi file, spline interpolation)
+==============================================================================
+                                                S-band         Ka-band
+  G_max                         [dBi]            55.61           69.00
+  expected G_max (eta = 82 %)   [dBi]            55.94           69.09
+  eta                             [%]             76.1            80.4
+  peak direction theta          [deg]           0.0325          0.0025
+  peak direction phi            [deg]            -90.0           -90.0
+  HPBW (mean of the planes)     [deg]           0.3097          0.0669
+  FMLL (highest of the planes)   [dB]           -28.83          -25.18
+  G_x,max in the main beam      [dBi]            -8.06          -12.10
+  XPD = G_max - G_x,max          [dB]            63.67           81.10
+  max AR in the -3 dB beam       [dB]         1.37e-02        1.85e-03
 

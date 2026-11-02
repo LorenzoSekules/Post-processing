@@ -39,3 +39,5 @@ This repo has the far-field output files of two ideal offset parabolic reflector
 
 * The uv grid step is 0.002, which is about 0.115 deg. At Ka band the HPBW is about 0.07 deg, so the uv grid has fewer than 1 sample per beamwidth there. Use the theta-phi file for the Ka-band gain, HPBW and cross-pol. The script prints a warning about this.
 * Some values in the files are glued together, for example `0.89E-01-0.56`, because they are written in fixed-width Fortran fields. The reader handles this.
+
+The figures in `results/` were generated with GNU Octave as a reference. They include every figure except `<band>_uv_contour_full.png`: Octave takes too long to draw a filled contour on the whole 401×401 grid, so that figure was left out. In MATLAB it takes a few seconds, and running the script there regenerates everything.

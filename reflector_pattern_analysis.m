@@ -636,7 +636,10 @@ for zoom = [false true]
             plot([c.m.x3L c.m.x3R], (c.m.peakInterp-3)*[1 1], 'ko', ...
                  'MarkerFaceColor', 'y');
             plot(c.m.peakPosInterp, c.m.peakInterp, 'k^', 'MarkerFaceColor', 'g');
-            yl = [pk-70, pk+3];
+            % lower limit: 70 dB below the peak, or lower if needed to
+            % show the cross-polar peak inside the zoom window
+            inZ = abs(c.theta) <= lim;
+            yl = [min(pk-70, max(c.xp(inZ)) - 15), pk+3];
             leg = {'Co-pol (LHCP)', 'X-pol (RHCP)', '-3 dB level', ...
                    '-3 dB points', 'peak'};
             ttl = sprintf('%s  -  plane \\phi = %d deg\nHPBW = %.4f deg, peak %.2f dBi at \\theta = %.4f deg', ...

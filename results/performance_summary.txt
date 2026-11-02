@@ -1,0 +1,93 @@
+
+=====================================================================
+              REFLECTOR RADIATION PATTERN - PERFORMANCE
+=====================================================================
+ Co-polar = LHCP (E-l), cross-polar = RHCP (E-r). Gains in dBi.
+ "tp" = theta-phi file (9 phi cuts), "uv" = uv-grid file.
+ Interpolated values: parabolic fit of the 3 samples around the max.
+
+---------------------------------------------------------------------
+ S-band : D = 30 m, F = 30 m, f = 2.2 GHz, lambda = 0.1363 m, D/lambda = 220.2
+---------------------------------------------------------------------
+ THEORETICAL REFERENCES
+   Max directivity, uniform aperture (pi*D/lambda)^2 :    56.80 dBi
+   HPBW uniform aperture 58.4*lambda/D              :   0.2653 deg
+   HPBW rule of thumb (tapered) 70*lambda/D         :   0.3180 deg
+   CP beam squint asin(lambda sin(aoff)/(4 pi F))  :   0.0166 deg (first-order estimate)
+
+ PEAK GAIN (co-polar)                         tp file        uv file
+   raw sample                [dBi]           55.605         55.485
+   interpolated              [dBi]           55.612         55.620
+   aperture efficiency        [%]              76.1           76.3
+
+ PEAK LOCATION
+   tp raw sample   : theta = 0.0250 deg, phi = -90.0 deg
+   tp interpolated : theta = 0.0325 deg, phi = -90.0 deg
+   uv raw sample   : (u,v) = (0.00000, 0.00000)
+   uv interpolated : (u,v) = (-0.00000, -0.00058) -> theta = 0.0331 deg, phi = -90.2 deg
+
+ HALF POWER BEAMWIDTH [deg]
+   plane phi [deg] :         0        45        90       135      mean
+   tp file         :    0.3085    0.3096    0.3108    0.3098    0.3097
+   uv file         :    0.3171    0.2967    0.2924    0.2968    0.3007
+   samples per HPBW: tp 12.4 (step 0.0250 deg), uv 2.6 (step 0.1146 deg)
+
+ FIRST NULL / FIRST SIDE LOBE (tp file)
+   plane phi [deg] :         0        45        90       135
+   first null [deg]:    0.6250    0.5250    0.4125    0.5250
+   SLL [dB]        :    -29.84    -25.07    -28.95    -24.99
+
+ CROSS-POLAR (RHCP)
+   main lobe region: theta <= 0.5219 deg (mean first null)
+   tp main-lobe X-pol peak :    -8.08 dBi at theta = 0.2000 deg, phi = 90.0 deg
+   uv main-lobe X-pol peak :    -8.49 dBi at (u,v) = (0.0000, 0.0040) -> theta = 0.2292, phi = 90.0 deg
+   tp global X-pol peak    :    -7.98 dBi at theta = 90.0000 deg, phi = 135.0 deg
+   uv global X-pol peak    :    -8.49 dBi at (u,v) = (0.0000, 0.0040) -> theta = 0.2292, phi = 90.0 deg
+   XPD = co peak - X-pol main-lobe peak : tp 63.69 dB, uv 64.11 dB
+   worst XPD inside the -3 dB beam      : tp 62.24 dB, uv 62.90 dB
+   axial ratio at the beam peak (tp)    : 2.08e-03 dB
+
+---------------------------------------------------------------------
+ Ka-band : D = 10 m, F = 10 m, f = 30 GHz, lambda = 0.0100 m, D/lambda = 1000.7
+---------------------------------------------------------------------
+ THEORETICAL REFERENCES
+   Max directivity, uniform aperture (pi*D/lambda)^2 :    69.95 dBi
+   HPBW uniform aperture 58.4*lambda/D              :   0.0584 deg
+   HPBW rule of thumb (tapered) 70*lambda/D         :   0.0700 deg
+   CP beam squint asin(lambda sin(aoff)/(4 pi F))  :   0.0026 deg (first-order estimate)
+
+ PEAK GAIN (co-polar)                         tp file        uv file
+   raw sample                [dBi]           68.984         68.984
+   interpolated              [dBi]           69.002         68.990
+   aperture efficiency        [%]              80.4           80.2
+
+ PEAK LOCATION
+   tp raw sample   : theta = 0.0000 deg, phi = -180.0 deg
+   tp interpolated : theta = 0.0026 deg, phi = -90.0 deg
+   uv raw sample   : (u,v) = (0.00000, 0.00000)
+   uv interpolated : (u,v) = (0.00000, -0.00003) -> theta = 0.0016 deg, phi = -89.4 deg
+
+ HALF POWER BEAMWIDTH [deg]
+   plane phi [deg] :         0        45        90       135      mean
+   tp file         :    0.0705    0.0705    0.0705    0.0705    0.0705
+   uv file         :    0.0571    0.0554    0.0561    0.0554    0.0560
+   samples per HPBW: tp 2.8 (step 0.0250 deg), uv 0.5 (step 0.1146 deg)
+   WARNING: the uv grid has less than 2 samples per HPBW: the uv
+            peak gain, HPBW and X-pol/XPD values are NOT reliable
+            (the main beam falls between the grid points): use the tp file.
+
+ FIRST NULL / FIRST SIDE LOBE (tp file)
+   plane phi [deg] :         0        45        90       135
+   first null [deg]:    0.1250    0.1625    0.1625    0.1625
+   SLL [dB]        :    -31.73    -31.42    -31.33    -31.38
+
+ CROSS-POLAR (RHCP)
+   main lobe region: theta <= 0.1531 deg (mean first null)
+   tp main-lobe X-pol peak :   -12.32 dBi at theta = 0.0500 deg, phi = 90.0 deg
+   uv main-lobe X-pol peak :   -24.73 dBi at (u,v) = (0.0000, 0.0020) -> theta = 0.1146, phi = 90.0 deg
+   tp global X-pol peak    :    14.14 dBi at theta = 62.9250 deg, phi = -180.0 deg
+   uv global X-pol peak    :   -24.73 dBi at (u,v) = (0.0000, 0.0020) -> theta = 0.1146, phi = 90.0 deg
+   XPD = co peak - X-pol main-lobe peak : tp 81.32 dB, uv 93.72 dB
+   worst XPD inside the -3 dB beam      : tp 81.35 dB, uv 149.29 dB
+   axial ratio at the beam peak (tp)    : 1.07e-06 dB
+
